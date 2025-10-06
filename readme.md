@@ -7,6 +7,7 @@ This project implements a complete end-to-end API pipeline that interacts with S
 - Data fetching from StackOverflow API (`/fetch` endpoint)
 - Local storage in SQLite database (`questions.db`)
 - Data serving through REST endpoint (`/questions`)
+- Analytics endpoint for data insights (`/analytics`)
 - Error handling and rate limiting
 - Efficient data caching
 - RESTful API design patterns
@@ -33,22 +34,34 @@ This project implements a complete end-to-end API pipeline that interacts with S
     - Supports filtering and pagination
     - JSON response format
 
+4. **Analytics**
+    - Endpoint: `/analytics`
+    - Provides data insights and statistics
+    - Query aggregation and analysis
+    - Performance metrics tracking
+
 ## Project Structure
 ```
 api-pipeline/
 │
-├── src/
-│   ├── api/              # API endpoint handlers
-│   ├── database/         # Database models and migrations
-│   ├── services/         # Business logic and data processing
-│   └── utils/            # Helper functions and utilities
+├── app/
+│   ├── __init__.py                 ← creates Flask app, registers blueprints
+│   ├── models.py                   ← contains Question model
+│   ├── routes/
+│   │   ├── __init__.py
+│   │   ├── fetch_routes.py         ← POST /fetch, GET /
+│   │   ├── question_routes.py      ← GET /questions
+│   │   ├── analytics_routes.py     ← GET /analytics
+│   │
+│   ├── services/
+│   │   ├── __init__.py
+│   │   ├── config.py← fetches data from external API
+│   │   
+│   ├── config.py
 │
-├── tests/               # Test suites
-│
-├── config/             # Configuration files
-│
-└── data/              # Data storage directory
-    └── questions.db   # SQLite database file
+├── run.py
+└── questions.db
+
 ```
 
 ## Setup
@@ -71,6 +84,9 @@ curl localhost:port/questions?tag=python
 
 # Paginate results
 curl localhost:port/questions?page=1&size=10
+
+# Get analytics data
+curl localhost:port/analytics
 ```
 
 ## Technical Stack
