@@ -1,11 +1,2 @@
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
-*.db
-*.sqlite3
-.env
-.git
-.gitignore
-.DS_Store
-tests/
+instance/
