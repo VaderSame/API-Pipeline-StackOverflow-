@@ -1,23 +1,20 @@
-# Use official Python image as base
-FROM python:3.07
+# ---- 1. Base image ----
+FROM python:3.10-slim-buster
 
-# Upgrade system packages to reduce vulnerabilities
-RUN apt-get update && apt-get upgrade -y && apt-get clean
-
-# Set working directory
+# ---- 2. Set work directory ----
 WORKDIR /app
 
-# Copy requirements if present
-COPY requirements.txt ./
+# ---- 3. Copy requirements ----
+COPY requirements.txt .
 
-# Install dependencies
+# ---- 4. Install dependencies ----
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy project files
+# ---- 5. Copy project files ----
 COPY . .
 
-# Expose port (change if your app uses a different port)
-EXPOSE 8000
+# ---- 6. Expose Flask port ----
+EXPOSE 5000
 
-# Set default command (adjust if your entry point is different)
-CMD ["python", "main.py"]
+# ---- 7. Run the Flask app ----
+CMD ["python", "run.py"]
